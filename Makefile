@@ -3,7 +3,7 @@ CFLAGS  := -std=gnu11 -Wall -Wextra -Wpedantic -O2 -g
 LDFLAGS := -pthread
 BUILD   := build
 
-.PHONY: all server server-stub test test-parser test-server clean
+.PHONY: all server server-stub test test-parser test-routes test-server clean
 
 all: server
 
@@ -26,12 +26,17 @@ $(BUILD)/test_parser: tests/test_parser.c tests/stubs.c src/parser.c | $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Pruebas de integración del servidor (sockets reales + stubs)
+test-routes: $(BUILD)/test_routes
+	./$(BUILD)/test_routes
+$(BUILD)/test_routes: tests/test_routes.c src/routes.c | $(BUILD)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
 test-server: $(BUILD)/test_server
 	./$(BUILD)/test_server
-$(BUILD)/test_server: tests/test_server.c src/server.c src/parser.c tests/stubs.c | $(BUILD)
+$(BUILD)/test_server: src/test_server.c src/server.c src/parser.c tests/stubs.c | $(BUILD)
 	$(CC) $(CFLAGS) -DSERVER_NO_MAIN -o $@ $^ $(LDFLAGS)
 
-test: test-parser test-server
+test: test-parser test-routes test-server
 
 $(BUILD):
 	mkdir -p $(BUILD)

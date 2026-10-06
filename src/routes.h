@@ -22,14 +22,17 @@ int routes_random_subnets(const char *network, const char *mask,
                           long number, const char *size,
                           char *out, size_t n);
 
-/* Primitiva 8. RC_OK, RC_ERR_IP, RC_ERR_MASK o RC_ERR_EXISTS. */
+/* Primitiva 8. La red se normaliza con la mascara antes de guardarla.
+ * RC_OK, RC_ERR_IP, RC_ERR_MASK o RC_ERR_EXISTS. */
 int routes_set(const char *name, const char *network, const char *mask,
                long priority);
 
 /* Primitiva 9. RC_OK o RC_ERR_NOT_FOUND. */
 int routes_del(const char *name);
 
-/* Primitiva 10. 'out' = nombre de la ruta (o el detalle si debug != 0).
+/* Primitiva 10. Usa longest-prefix match. En un empate de prefijo gana la
+ * prioridad numericamente menor; si tambien empata, gana la ruta mas antigua.
+ * 'out' = nombre de la ruta (o el detalle si debug != 0).
  * RC_ERR_NO_ROUTE si ninguna ruta coincide. */
 int routes_lookup(const char *ip, int debug, char *out, size_t n);
 
