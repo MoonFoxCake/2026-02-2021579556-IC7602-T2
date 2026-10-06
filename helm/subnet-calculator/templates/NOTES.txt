@@ -1,0 +1,2 @@
+Conéctese mediante telnet:
+  telnet $(minikube ip) {{ .Values.service.nodePort }}

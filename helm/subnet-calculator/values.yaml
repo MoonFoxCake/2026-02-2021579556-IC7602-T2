@@ -1,0 +1,11 @@
+image:
+  repository: subnet-calculator
+  tag: "1.0"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: NodePort
+  port: 9666
+  nodePort: 30966
