@@ -1,0 +1,12 @@
+apiVersion: v2
+name: subnet-calculator
+description: Chart de Helm para el despliegue de la Calculadora de Subredes IPv4 en Kubernetes (IC7602 Tarea 2)
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - ipv4
+  - subnet-calculator
+  - tcp
+  - telnet
+  - networks
